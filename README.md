@@ -1,6 +1,13 @@
 # seppuku
 Ferramenta para análise de métricas de projetos Delphi (Complexidade ciclomatica).
 
+## Prints
+  Principal
+  ![](https://github.com/ricardotondello/seppuku/blob/master/prints/img1.png)
+  
+  Métrica
+  ![](https://github.com/ricardotondello/seppuku/blob/master/prints/img2.png)
+  
 ## Requirements
 
   * Python 3.5.x
