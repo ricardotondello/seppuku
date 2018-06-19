@@ -1,0 +1,6 @@
+/__pycache__/
+/setup/build/
+/setup/dist/
+/setup/seppuku.spec
+/setup/Output/
+*.log

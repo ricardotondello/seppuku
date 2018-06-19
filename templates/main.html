@@ -1,0 +1,86 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+<script src="https://code.jquery.com/jquery-2.0.0.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+{% extends "layout.html" %}
+{% block body %}
+
+<body onLoad="onLoadPage()">
+<div class="container" >
+
+<!-- Nav bar -->
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Seppuku</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cog" ></span> Configuração</a></li>
+      </ul>
+    </div>
+  </nav>
+
+    
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Configuração</h4>
+        </div> 
+          <form method="POST" action="/getconfig">
+            <div class="modal-body" >
+              <label for="compare_tool_path">Compare Tool</label>
+              <!-- <input type="file" id="compare_tool_path" name="compare_tool_path"> -->
+              <input type="text" class="form-control" id="compare_tool_full_path" name="compare_tool_full_path">              
+              
+              <p class="help-block">Atual: {{ session['compare_tool_path']}}</p>
+              
+              <label for="source_monitor_path">Source Monitor</label>
+              <!-- <input type="file" name="source_monitor_path" > -->
+              <input type="text" class="form-control" id="source_monitor_full_path" name="source_monitor_full_path" >
+              
+              <p class="help-block">Atual: {{session['source_monitor_path']}}</p>
+              
+            </div>
+            
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-default">Salvar</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+          </form>              
+      </div>
+    </div>
+  </div>
+     
+    
+    
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Original (Temporário TFS)</label>
+      <div class="col-sm-10">
+        <p class="form-control-static">{{session['file_old']}}</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Modificado</label>
+      <div class="col-sm-10">
+        <p class="form-control-static">{{session['file_new']}}</p>
+      </div>
+    </div>
+    
+    <a href="/open_compare_tool" type="button" class="btn btn-primary btn-lg">Compare Tool</a>
+    <a href="/report" type="button" class="btn btn-primary btn-lg">Métricas</a>
+  </form>
+    
+  <blockquote>
+    <footer>Ricardo Tondello. Gutierry Antonio Neto Pereira - Equipe MP - Softplan - 2018</footer>
+  </blockquote>
+</div>
+</body>
+
+{% endblock %}

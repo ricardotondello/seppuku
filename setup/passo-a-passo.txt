@@ -1,0 +1,9 @@
+instalar python
+instalar Flask      (pip install Flask==0.12.2)
+instalar pyintaller (pip install pyintaller==3.3.1)
+instalar xmltodict  (pip install xmltodict==0.11.0)
+instalar pypiwin32  (pip install pypiwin32==219)
+
+
+--para gerar o executavel de um arquivo python
+pip pyinstaller --onefile seppuku.py
