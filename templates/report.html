@@ -1,99 +1,119 @@
-<!-- <script src="/static/jquery-1.11.1.min.js"></script> -->
+<!DOCTYPE html>
+  <html>
+    <head>
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css" rel="stylesheet" id="materialize-css">
+    </head>
 
-<script src="https://code.jquery.com/jquery-2.0.0.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-
-{% block body %}
-
-<div class="container" >
-  <div class="row">
-    <div class="col-lg-12"> 
-      <h2>Resultado das métricas!</h2>
-    </div>
-   <div class="form-horizontal">
-    <a href="/open_compare_tool_no_redirect" type="button" class="btn btn-primary btn-lg">Compare Tool</a>
-   </div>
+    <body>
+    
    
-  </div>
-  
-      <table id="table-total" class="table table-sm table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">Totalizadores</th>
-          <th scope="col">Complexity</th>
-          <th scope="col">Max Depth</th>
-          <th scope="col">Statements</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for aux in metodos_totalizador %}
-        <tr class="bg {{aux.termometro}}"> 
-            <td> {{aux.method_name }} </td>
-            <td> {{ aux.complexity }} </td>
-            <td> {{ aux.depth }}      </td>
-            <td> {{ aux.statements }} </td>
-        </tr> 
-      {% endfor %}
-      </tbody>
-    </table>
-  
-    <table class="table table-sm table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">Método(s)</th>
-          <th scope="col">Complexity</th>
-          <th scope="col">Max Depth</th>
-          <th scope="col">Statements</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for aux in metodos_geral_alterado %}
-        <tr class="bg {{aux.termometro}}"> 
-            <td> {{aux.method_name }} </td>
-            <td> {{ aux.complexity }} </td>
-            <td> {{ aux.depth }}      </td>
-            <td> {{ aux.statements }} </td>
-        </tr> 
-      {% endfor %}
-      </tbody>
-    </table>
-    
-    <!-- não alterados -->
-    
-    <ul class="collapsible" data-collapsible="expandable">
-      <li>
-        <div class="collapsible-header"><i class="mdi-navigation-chevron-right"></i><a name="987"/>Métodos não alterados</a></div>
-        <div class="collapsible-body">
-           <table class="table table-sm table-bordered">
-            <thead>
-              <tr>
-                <th scope="col">Método(s)</th>
-                <th scope="col">Complexity</th>
-                <th scope="col">Max Depth</th>
-                <th scope="col">Statements</th>
-              </tr>
-            </thead>
-            <tbody>
-            {% for aux in metodos_geral_nao_alterado %}
-              <tr> 
-                  <td> {{aux.method_name }} </td>
-                  <td> {{ aux.complexity }} </td>
-                  <td> {{ aux.depth }}      </td>
-                  <td> {{ aux.statements }} </td>
-              </tr> 
-            {% endfor %}
-            </tbody>
-          </table>       
+      {% block body %}
+
+      <div class="container" >
+        <div class="row">
+          <div class="col s12"> 
+            <h2>Resultado das métricas!</h2>
+          </div>
+           <div class="form-horizontal">
+            <a href="/open_compare_tool" type="button" class="btn btn-primary btn-lg">Compare Tool</a>
+           </div>
         </div>
-      </li>            
-    </ul>
-    
+        
+        
+        
+        <ul class="collapsible" data-collapsible="expandable">  
+          <li>
+            <div class="collapsible-header active"><i class="material-icons">equalizer</i>Totalizador</div>
+            <div class="collapsible-body">
+              <table class="table table-sm table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Totalizadores</th>
+                    <th scope="col">Complexity</th>
+                    <th scope="col">Max Depth</th>
+                    <th scope="col">Statements</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for aux in metodos_totalizador %}
+                  <tr class="bg {{aux.termometro}}"> 
+                      <td> {{aux.method_name }} </td>
+                      <td> {{ aux.complexity }} </td>
+                      <td> {{ aux.depth }}      </td>
+                      <td> {{ aux.statements }} </td>
+                  </tr> 
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </li>
+        
+          <li>
+            <div class="collapsible-header active"><i class="material-icons">edit</i>Alterados</div>
+            <div class="collapsible-body">
+              <table class="table table-sm table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Método(s)</th>
+                    <th scope="col">Complexity</th>
+                    <th scope="col">Max Depth</th>
+                    <th scope="col">Statements</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for aux in metodos_geral_alterado %}
+                  <tr class="bg {{aux.termometro}}"> 
+                      <td> {{aux.method_name }} </td>
+                      <td> {{ aux.complexity }} </td>
+                      <td> {{ aux.depth }}      </td>
+                      <td> {{ aux.statements }} </td>
+                  </tr> 
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </li>
+         
+        
+        
+        
+          
+          <!-- não alterados -->
+         
+          <li>
+            <div class="collapsible-header"><i class="material-icons">chevron_right</i>Métodos não alterados</div>
+            <div class="collapsible-body">
+               <table class="table table-sm table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Método(s)</th>
+                    <th scope="col">Complexity</th>
+                    <th scope="col">Max Depth</th>
+                    <th scope="col">Statements</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for aux in metodos_geral_nao_alterado %}
+                  <tr> 
+                      <td> {{aux.method_name }} </td>
+                      <td> {{ aux.complexity }} </td>
+                      <td> {{ aux.depth }}      </td>
+                      <td> {{ aux.statements }} </td>
+                  </tr> 
+                {% endfor %}
+                </tbody>
+              </table>       
+            </div>
+          </li>              
+           
+        </ul>  
 
-    
-</div>
+          
+      </div>
 
-{% endblock %}
+      {% endblock %}
+
+      
+      
+    </body>      
+  </html>

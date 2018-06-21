@@ -38,10 +38,20 @@ def report():
     if not validar():
         return redirect('/')
     
+    metodos_geral_alterado_tmp, metodos_geral_nao_alterado_tmp, metodos_totalizador_tmp = get_report()
+    
+    return render_template('report.html',
+                           metodos_geral_alterado = metodos_geral_alterado_tmp,
+                           metodos_geral_nao_alterado = metodos_geral_nao_alterado_tmp,
+                           metodos_totalizador = metodos_totalizador_tmp)
+
+def get_report():
     gerar_dump()
     MostrarResultado(path_dump_file)    
     metodoordenado = sorted(metodos_geral_alterado, key=lambda arquivo: arquivo.nivel, reverse=True)
-    return render_template('report.html', metodos_geral_alterado=metodoordenado, metodos_geral_nao_alterado=metodos_geral_nao_alterado, metodos_totalizador=metodos_totalizador)
+    
+    metodos_geral_nao_alterado_sorted = sorted(metodos_geral_nao_alterado, key=lambda arquivo: arquivo.complexity, reverse=True)
+    return metodoordenado, metodos_geral_nao_alterado_sorted, metodos_totalizador
 
 def validar():
 
@@ -148,6 +158,9 @@ def loadXmlDump(sDumpFile):
     metodos_old.clear()
     metodos_geral_alterado.clear()
     metodos_geral_nao_alterado.clear()
+
+    if not os.path.isfile(sDumpFile):
+        return
     
     with open(sDumpFile) as fd:
         doc = xmltodict.parse(fd.read())

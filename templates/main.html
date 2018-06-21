@@ -1,86 +1,103 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!DOCTYPE html>
+  <html>
+    <head>
+      <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
-<script src="https://code.jquery.com/jquery-2.0.0.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-
-{% extends "layout.html" %}
-{% block body %}
-
-<body onLoad="onLoadPage()">
-<div class="container" >
-
-<!-- Nav bar -->
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">Seppuku</a>
-      </div>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cog" ></span> Configuração</a></li>
-      </ul>
-    </div>
-  </nav>
-
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
-
-<!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Configuração</h4>
-        </div> 
-          <form method="POST" action="/getconfig">
-            <div class="modal-body" >
-              <label for="compare_tool_path">Compare Tool</label>
-              <!-- <input type="file" id="compare_tool_path" name="compare_tool_path"> -->
-              <input type="text" class="form-control" id="compare_tool_full_path" name="compare_tool_full_path">              
-              
-              <p class="help-block">Atual: {{ session['compare_tool_path']}}</p>
-              
-              <label for="source_monitor_path">Source Monitor</label>
-              <!-- <input type="file" name="source_monitor_path" > -->
-              <input type="text" class="form-control" id="source_monitor_full_path" name="source_monitor_full_path" >
-              
-              <p class="help-block">Atual: {{session['source_monitor_path']}}</p>
-              
-            </div>
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="static/css/materialize.min.css"  media="screen,projection"/>
             
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-default">Salvar</button>
-              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            </div>
-          </form>              
-      </div>
-    </div>
-  </div>
-     
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <script type="text/javascript" src="static/js/materialize.min.js"></script>
     
-    
-  <form class="form-horizontal">
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Original (Temporário TFS)</label>
-      <div class="col-sm-10">
-        <p class="form-control-static">{{session['file_old']}}</p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Modificado</label>
-      <div class="col-sm-10">
-        <p class="form-control-static">{{session['file_new']}}</p>
-      </div>
-    </div>
-    
-    <a href="/open_compare_tool" type="button" class="btn btn-primary btn-lg">Compare Tool</a>
-    <a href="/report" type="button" class="btn btn-primary btn-lg">Métricas</a>
-  </form>
-    
-  <blockquote>
-    <footer>Ricardo Tondello. Gutierry Antonio Neto Pereira - Equipe MP - Softplan - 2018</footer>
-  </blockquote>
-</div>
-</body>
+    </head>
 
-{% endblock %}
+    <body>
+      
+      <script>
+          $(document).ready(function(){
+            $('#modal1').modal();
+          });
+          
+      </script>
+      
+      {% extends "layout.html" %}
+      {% block body %}
+     
+
+      <!-- Nav bar -->
+      <nav>
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo">Seppuku</a>
+          <ul class="right hide-on-med-and-down">
+            <li><a class="modal-trigger" href="#modal1">Configuração</a></li>
+          </ul>
+        </div>
+      </nav>
+
+
+      <!-- Modal -->
+      <div class="modal" id="modal1">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Configuração</h4>
+            </div> 
+              <form method="POST" action="/getconfig">
+                <div class="modal-body" >
+                  <label for="compare_tool_path">Compare Tool</label>
+                  <input type="text" class="form-control" id="compare_tool_full_path" name="compare_tool_full_path" value="{{ session['compare_tool_path']}}">
+                                     
+                  <label for="source_monitor_path">Source Monitor</label>
+                  <input type="text" class="form-control" id="source_monitor_full_path" name="source_monitor_full_path" value="{{session['source_monitor_path']}}" >
+                  
+                </div>
+                
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-default">Salvar</button>
+                  <button type="button" class="btn btn-default modal-close">Fechar</button>
+                </div>
+              </form>              
+          </div>
+        </div>
+      </div>
+     
+    <!-- Nome dos arquivos -->
+    <div class="container" >
+      <form class="form-horizontal">
+        <div class="form-group">
+        
+          <label for="fileOld">Original (Temporário TFS)</label>
+          <input type="text" class="form-control" id="fileOld" value="{{session['file_old']}}" disabled>
+                               
+          <label for="fileNew">Modificado</label>
+          <input type="text" class="form-control" id="fileNew" value="{{session['file_new']}}" disabled>
+          
+        </div>
+      </form>
+    </div>
+    
+    <!-- Relatório das métricas-->
+    <div>
+      <div class="row">
+        {% include "report.html" %}
+       </div>
+    </div> 
+
+    <blockquote>
+      <footer>Ricardo Tondello. Gutierry Antonio Neto Pereira - Equipe MP - Softplan - 2018</footer>
+    </blockquote>
+
+      {% endblock %} 
+    </body>
+  </html>
+
+
+
+

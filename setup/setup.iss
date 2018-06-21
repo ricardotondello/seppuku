@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Seppuku"
-#define MyAppVersion "0.3"
+#define MyAppVersion "0.4"
 #define MyAppPublisher "Ricardo Tondello;Gutierry Antonio Neto Pereira - MP - 2018"
 
 [Setup]
@@ -52,6 +52,8 @@ Name: TaskExecutarAoIniciar; Description: "Iniciar seppuku com o windows? (acons
 Source: "dist\seppuku.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\settings.json"; DestDir: "{app}"; Flags: onlyifdoesntexist
 Source: "..\templates\*"; DestDir: "{app}\templates"; Flags: ignoreversion
+Source: "..\static\*";    DestDir: "{app}\static";    Flags: ignoreversion recursesubdirs
+
 Source: "SourceMonitor\SourceMonitor.exe"; DestDir: "{app}"; Flags: onlyifdoesntexist
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

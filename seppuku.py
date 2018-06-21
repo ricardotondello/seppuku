@@ -34,6 +34,7 @@ def after_request(response):
 @app.errorhandler(Exception)
 def exceptions(e):
     """ Logging after every Exception. """
+
     ts = strftime('[%Y-%b-%d %H:%M]')
     tb = traceback.format_exc()
     logger.error('%s %s %s %s %s 5xx INTERNAL SERVER ERROR\n%s',
@@ -43,22 +44,28 @@ def exceptions(e):
                   request.scheme,
                   request.full_path,
                   tb)
+
     return "Internal Server Error", 500
 
 @app.route('/')
 def home():
     if not session.get('initialized'):
         inicializar()
-
+    load_config()
     ler_argumentos()
-    return render_template('main.html')
+    
+    metodos_geral_alterado_tmp, metodos_geral_nao_alterado_tmp, metodos_totalizador_tmp = gestor_dump_file.get_report()
+    return render_template('main.html', metodos_geral_alterado = metodos_geral_alterado_tmp,
+                       metodos_geral_nao_alterado = metodos_geral_nao_alterado_tmp,
+                       metodos_totalizador = metodos_totalizador_tmp)
+
 
 @app.route('/getconfig', methods = ["POST"])
 def get_config():
 
-    compare_tool_full_path = request.form.get('compare_tool_full_path')
-    source_monitor_full_path = request.form.get('source_monitor_full_path')
-
+    compare_tool_full_path           = request.form.get('compare_tool_full_path')
+    source_monitor_full_path         = request.form.get('source_monitor_full_path')
+        
     if compare_tool_full_path:
         session['compare_tool_path'] = compare_tool_full_path
     if source_monitor_full_path:
@@ -77,11 +84,6 @@ def open_compare_tool():
     validar_compare_tool()
     return redirect('/')
 
-@app.route('/open_compare_tool_no_redirect')
-def open_compare_tool_no_redirect():
-    validar_compare_tool()
-    return redirect('/report')
-
 def validar_compare_tool():
     if gestor_dump_file.validar():
         subprocess.Popen(session.get('compare_tool_path') + " " + session.get('file_old') + " " + session.get('file_new'))
@@ -96,6 +98,7 @@ def load_config():
     config                         = json.load(open( session.get('settings_path')))
     session['compare_tool_path']   = config["compare_tool_path"]
     session['source_monitor_path'] = config["source_monitor_path"]
+            
     session['has_config']          = validar_file(session.get('compare_tool_path')) and validar_file(session.get('source_monitor_path'))
 
 def validar_file(ps_file):
@@ -121,8 +124,6 @@ def inicializar():
     session['has_config']  = False
     session['file_new']    = sARQUIVO_NAO_LOCALIZADO
     session['file_old']    = sARQUIVO_NAO_LOCALIZADO
-    
-    load_config()
 
 ##Parte client - deve ser refatorado futuramente
 if (len(sys.argv) == 3):
