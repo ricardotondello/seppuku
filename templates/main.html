@@ -35,7 +35,7 @@
         <div class="nav-wrapper">
           <a href="#" class="brand-logo">Seppuku</a>
           <ul class="right hide-on-med-and-down">
-            <li><a class="modal-trigger" href="#modal1">Configuração</a></li>
+            <li><a class="waves-effect waves-light modal-trigger" href="#modal1">Configuração</a></li>
           </ul>
         </div>
       </nav>
@@ -43,56 +43,50 @@
 
       <!-- Modal -->
       <div class="modal" id="modal1">
-        <div class="modal-dialog">
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Configuração</h4>
-            </div> 
-              <form method="POST" action="/getconfig">
-                <div class="modal-body" >
-                  <label for="compare_tool_path">Compare Tool</label>
-                  <input type="text" class="form-control" id="compare_tool_full_path" name="compare_tool_full_path" value="{{ session['compare_tool_path']}}">
-                                     
-                  <label for="source_monitor_path">Source Monitor</label>
-                  <input type="text" class="form-control" id="source_monitor_full_path" name="source_monitor_full_path" value="{{session['source_monitor_path']}}" >
-                  
-                </div>
-                
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-default">Salvar</button>
-                  <button type="button" class="btn btn-default modal-close">Fechar</button>
-                </div>
-              </form>              
-          </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <h4>Configuração</h4>
+
+            <form method="POST" action="/getconfig">
+              
+                <label for="compare_tool_path">Compare Tool</label>
+                <input type="text" class="form-control" id="compare_tool_full_path" name="compare_tool_full_path" value="{{ session['compare_tool_path']}}">
+                                   
+                <label for="source_monitor_path">Source Monitor</label>
+                <input type="text" class="form-control" id="source_monitor_full_path" name="source_monitor_full_path" value="{{session['source_monitor_path']}}" >
+             
+              
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-default">Salvar</button>
+                <button type="button" class="btn btn-default modal-close">Fechar</button>
+              </div>
+            </form>             
         </div>
       </div>
      
-    <!-- Nome dos arquivos -->
-    <div class="container" >
-      <form class="form-horizontal">
-        <div class="form-group">
-        
-          <label for="fileOld">Original (Temporário TFS)</label>
-          <input type="text" class="form-control" id="fileOld" value="{{session['file_old']}}" disabled>
-                               
-          <label for="fileNew">Modificado</label>
-          <input type="text" class="form-control" id="fileNew" value="{{session['file_new']}}" disabled>
+      <!-- Nome dos arquivos -->
+      <div class="container" >
+        <form class="form-horizontal">
+          <div class="form-group">
           
-        </div>
-      </form>
-    </div>
-    
-    <!-- Relatório das métricas-->
-    <div>
+            <label for="fileOld">Original (Temporário TFS)</label>
+            <input type="text" class="form-control" id="fileOld" value="{{session['file_old']}}" disabled>
+                                 
+            <label for="fileNew">Modificado</label>
+            <input type="text" class="form-control" id="fileNew" value="{{session['file_new']}}" disabled>
+            
+          </div>
+        </form>
+      </div>
+      
+      <!-- Relatório das métricas-->
       <div class="row">
         {% include "report.html" %}
        </div>
-    </div> 
 
-    <blockquote>
-      <footer>Ricardo Tondello. Gutierry Antonio Neto Pereira - Equipe MP - Softplan - 2018</footer>
-    </blockquote>
+      <blockquote>
+        <footer>Ricardo Tondello. Gutierry Antonio Neto Pereira - Equipe MP - Softplan - 2018</footer>
+      </blockquote>
 
       {% endblock %} 
     </body>
