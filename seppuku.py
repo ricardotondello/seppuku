@@ -128,16 +128,20 @@ def inicializar():
 ##Parte client - deve ser refatorado futuramente
 if (len(sys.argv) == 3):
     path_tmp_tfs = 'TFSTemp'
-    file_old_temp = sys.argv[1] + '_temp'
+    file_old_temp = sys.argv[1]
     file_new_temp = sys.argv[2]
     
+    if path_tmp_tfs in file_old_temp:
+        file_old_temp = sys.argv[1] + '_temp'
+        os.popen('copy "' + sys.argv[1] + '" "' + file_old_temp + '"')
+        
     if path_tmp_tfs in file_new_temp:
         file_new_temp = sys.argv[2] + '_temp'
         os.popen('copy "' + sys.argv[2] + '" "' + file_new_temp + '"')
         
+        
     url = "http://127.0.0.1:5000?file_old={file_old}&file_new={file_new}".format(file_old=file_old_temp, file_new=file_new_temp)
 
-    os.popen('copy "' + sys.argv[1] + '" "' + file_old_temp + '"')
     logging.info(url)
     webbrowser.open_new_tab(url)
 
