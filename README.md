@@ -28,7 +28,7 @@ Ferramenta para análise de métricas de projetos Delphi (Complexidade ciclomati
     - Utilize passando 2 argumentos (seppuku.py c:\temp\fileOld.pas c:\temp\fileNew.pas)
     - Automáticamente abrirá o browser mostrando as métricas comparando os arquivos.
     
-##Uso no Git
+## Uso no Git
 
   [diff]
       tool = seppuku
