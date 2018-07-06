@@ -34,17 +34,20 @@ def after_request(response):
 @app.errorhandler(Exception)
 def exceptions(e):
     """ Logging after every Exception. """
-
-    ts = strftime('[%Y-%b-%d %H:%M]')
-    tb = traceback.format_exc()
-    logger.error('%s %s %s %s %s 5xx INTERNAL SERVER ERROR\n%s',
-                  ts,
-                  request.remote_addr,
-                  request.method,
-                  request.scheme,
-                  request.full_path,
-                  tb)
-
+    try:
+    
+        ts = strftime('[%Y-%b-%d %H:%M]')
+        tb = traceback.format_exc()
+        logger.error('%s %s %s %s %s 5xx INTERNAL SERVER ERROR\n%s',
+                      ts,
+                      request.remote_addr,
+                      request.method,
+                      request.scheme,
+                      request.full_path,
+                      tb)
+    except:
+        pass
+    
     return "Internal Server Error", 500
 
 @app.route('/')
@@ -127,19 +130,38 @@ def inicializar():
 
 ##Parte client - deve ser refatorado futuramente
 if (len(sys.argv) == 3):
-    path_tmp_tfs = 'TFSTemp'
-    file_old_temp = sys.argv[1]
-    file_new_temp = sys.argv[2]
-    
-    if path_tmp_tfs in file_old_temp:
-        file_old_temp = sys.argv[1] + '_temp'
-        os.popen('copy "' + sys.argv[1] + '" "' + file_old_temp + '"')
+    path_tmp = '/Temp/'
+    path_tmp_seppuku = 'C:/Seppuku/Temp/'
+    if not os.path.exists(path_tmp_seppuku):
+        os.makedirs(path_tmp_seppuku)
+
+    path_home_dir = os.environ['TEMP']
+    name_file_old = os.path.basename(sys.argv[1])
+    name_file_new = os.path.basename(sys.argv[2])
+    print(path_home_dir, '====', name_file_old, '===', name_file_new)
+    arg1 = sys.argv[1]
+    arg2 = sys.argv[2]
+  
+    file_old_temp = arg1
+    file_new_temp = arg2
+
+    if path_tmp in arg1:
+        file_old_temp = path_tmp_seppuku + name_file_old
+        arg1 = path_home_dir + '\\' + name_file_old
+        os.popen('copy "' + arg1 + '" "' + file_old_temp + '"')
         
-    if path_tmp_tfs in file_new_temp:
-        file_new_temp = sys.argv[2] + '_temp'
-        os.popen('copy "' + sys.argv[2] + '" "' + file_new_temp + '"')
-        
-        
+    if path_tmp in arg2:
+        file_new_temp = path_tmp_seppuku + name_file_new
+        arg2 = path_home_dir + '\\' + name_file_new
+        os.popen('copy "' + arg2 + '" "' + file_new_temp + '"')        
+
+    file_new_temp = file_new_temp.replace('/', '\\')
+    file_old_temp = file_old_temp.replace('/', '\\')
+
+    print(file_old_temp, '      ======    ', arg1)   
+    print(file_new_temp, '      ======    ', arg2)
+       
+
     url = "http://127.0.0.1:5000?file_old={file_old}&file_new={file_new}".format(file_old=file_old_temp, file_new=file_new_temp)
 
     logging.info(url)
