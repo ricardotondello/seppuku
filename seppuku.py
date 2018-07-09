@@ -128,6 +128,15 @@ def inicializar():
     session['file_new']    = sARQUIVO_NAO_LOCALIZADO
     session['file_old']    = sARQUIVO_NAO_LOCALIZADO
 
+def get_port():
+
+    try:  
+        port = os.environ['PORTA_SEPPUKU']
+    except KeyError: 
+        port = 5000
+
+    return int(port)
+
 ##Parte client - deve ser refatorado futuramente
 if (len(sys.argv) == 3):
     path_tmp = '/Temp/'
@@ -138,7 +147,7 @@ if (len(sys.argv) == 3):
     path_home_dir = os.environ['TEMP']
     name_file_old = os.path.basename(sys.argv[1])
     name_file_new = os.path.basename(sys.argv[2])
-    print(path_home_dir, '====', name_file_old, '===', name_file_new)
+    
     arg1 = sys.argv[1]
     arg2 = sys.argv[2]
   
@@ -156,13 +165,9 @@ if (len(sys.argv) == 3):
         os.popen('copy "' + arg2 + '" "' + file_new_temp + '"')        
 
     file_new_temp = file_new_temp.replace('/', '\\')
-    file_old_temp = file_old_temp.replace('/', '\\')
-
-    print(file_old_temp, '      ======    ', arg1)   
-    print(file_new_temp, '      ======    ', arg2)
-       
-
-    url = "http://127.0.0.1:5000?file_old={file_old}&file_new={file_new}".format(file_old=file_old_temp, file_new=file_new_temp)
+    file_old_temp = file_old_temp.replace('/', '\\')      
+    
+    url = "http://127.0.0.1:{porta}?file_old={file_old}&file_new={file_new}".format(porta=get_port(), file_old=file_old_temp, file_new=file_new_temp)
 
     logging.info(url)
     webbrowser.open_new_tab(url)
@@ -174,7 +179,7 @@ if ((len(sys.argv) == 1) and (__name__ == "__main__")):
     logger.addHandler(handler)
     
     app.secret_key = os.urandom(12)
-    app.run(host='127.0.0.1', port=5000)
+    app.run(host='127.0.0.1', port=get_port())
     
    
 
