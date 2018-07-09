@@ -36,4 +36,5 @@ Ferramenta para análise de métricas de projetos Delphi (Complexidade ciclomati
         cmd ="\"C:/seppuku/seppuku.exe\" $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") \"$PWD\"/\"$REMOTE\""
 
 ## Trocar porta da aplicação
-    ![](https://github.com/ricardotondello/seppuku/blob/master/prints/imgporta.png)
+
+  ![](https://github.com/ricardotondello/seppuku/blob/master/prints/imgporta.png)
