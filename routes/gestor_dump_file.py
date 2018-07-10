@@ -168,24 +168,24 @@ def loadXmlDump(sDumpFile):
     for arq in doc['sourcemonitor_metrics']['project']['checkpoints']['checkpoint']['files']['file']:
         
         file_name = arq['@file_name']
+        if len(arq) > 1:
+            for method in arq['method']:
+                method_name = method['@name']
+                complexity  = method['complexity']
+                statements  = method['statements']
+                depth       = method['maximum_depth']
                 
-        for method in arq['method']:
-            method_name = method['@name']
-            complexity  = method['complexity']
-            statements  = method['statements']
-            depth       = method['maximum_depth']
-            
-            auxarquivo = arquivo()
-            auxarquivo.method_name = method_name
-            auxarquivo.complexity  = complexity
-            auxarquivo.statements  = statements
-            auxarquivo.depth       = depth
-                        
-            if file_name == "FileNew.pas":
-                metodos_new.append(auxarquivo)
-            else:
-                metodos_old.append(auxarquivo)
-                
+                auxarquivo = arquivo()
+                auxarquivo.method_name = method_name
+                auxarquivo.complexity  = complexity
+                auxarquivo.statements  = statements
+                auxarquivo.depth       = depth
+                            
+                if file_name == "FileNew.pas":
+                    metodos_new.append(auxarquivo)
+                else:
+                    metodos_old.append(auxarquivo)
+
     MontarDiferencas()
 
 def retorna_metodo_correspondente(method_to_find, method_name):
