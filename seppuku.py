@@ -138,8 +138,15 @@ def get_port():
     return int(port)
 
 ##Parte client - deve ser refatorado futuramente
+
+def copia_arquivo(origem, destino):
+    os.popen('copy "{origem}" "{destino}"'.format(origem=origem, destino=destino))
+    
 if (len(sys.argv) == 3):
-    path_tmp = '/Temp/'
+    path_tmp = "Temp"
+    tmp_tfs = "TFSTemp"
+    tmp_smart = "smartgit-"
+    
     path_tmp_seppuku = 'C:/Seppuku/Temp/'
     if not os.path.exists(path_tmp_seppuku):
         os.makedirs(path_tmp_seppuku)
@@ -154,15 +161,23 @@ if (len(sys.argv) == 3):
     file_old_temp = arg1
     file_new_temp = arg2
 
-    if path_tmp in arg1:
+    
+    if tmp_tfs in arg1 or tmp_smart in arg1:
+        file_old_temp = path_tmp_seppuku + name_file_old
+        copia_arquivo(arg1, file_old_temp)
+    elif path_tmp in arg1:
         file_old_temp = path_tmp_seppuku + name_file_old
         arg1 = path_home_dir + '\\' + name_file_old
-        os.popen('copy "' + arg1 + '" "' + file_old_temp + '"')
+        copia_arquivo(arg1, file_old_temp)
         
-    if path_tmp in arg2:
+    if tmp_tfs in arg2 or tmp_smart in arg2:
+        file_new_temp = path_tmp_seppuku + name_file_new
+        copia_arquivo(arg2, file_new_temp)
+    elif path_tmp in arg2:
         file_new_temp = path_tmp_seppuku + name_file_new
         arg2 = path_home_dir + '\\' + name_file_new
-        os.popen('copy "' + arg2 + '" "' + file_new_temp + '"')        
+        copia_arquivo(arg2, file_new_temp)
+        
 
     file_new_temp = file_new_temp.replace('/', '\\')
     file_old_temp = file_old_temp.replace('/', '\\')      
