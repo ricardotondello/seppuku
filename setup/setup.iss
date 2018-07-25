@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Seppuku"
-#define MyAppVersion "0.8"
+#define MyAppVersion "0.9"
 #define MyAppPublisher "Ricardo Tondello;Gutierry Antonio Neto Pereira - MP - 2018"
 
 [Setup]

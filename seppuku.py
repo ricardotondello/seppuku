@@ -31,25 +31,6 @@ def after_request(response):
                       response.status)
     return response
 
-@app.errorhandler(Exception)
-def exceptions(e):
-    """ Logging after every Exception. """
-    try:
-    
-        ts = strftime('[%Y-%b-%d %H:%M]')
-        tb = traceback.format_exc()
-        logger.error('%s %s %s %s %s 5xx INTERNAL SERVER ERROR\n%s',
-                      ts,
-                      request.remote_addr,
-                      request.method,
-                      request.scheme,
-                      request.full_path,
-                      tb)
-    except:
-        pass
-    
-    return "Internal Server Error", 500
-
 @app.route('/')
 def home():
     if not session.get('initialized'):
